@@ -1,0 +1,418 @@
+{% if user.is_authenticated %}
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>QnA ; My - World</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
+        
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Rokkitt" rel="stylesheet"> 
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'style/tiktok.css' %}" title="style" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/content.css' %}" title="style" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/content-menu2.css' %}" title="style" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/post.css' %}" title="style" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="{% url 'index' %}">Question<span class="logo_colour">&amp;Answer</span></a></h1>
+          <h1>Share Your Views Here.</h1>
+        </div>
+      </div>
+      <div id="menubar">
+
+        <h1>Share Your Views Here.</h1>
+        <ul id="menu">
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li class="selected"><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+
+          {% if user.is_authenticated %}
+
+          <li><a href="{% url 'dashboard' %}">Profile</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+          <li><a href="{% url 'chat' %} "></i> Chat</a> </li>
+
+          {% else %}
+
+          <li><a href="{% url 'register' %}">Register</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+          
+
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+
+
+        <!-- insert the page content here -->
+
+
+        <div class="navbar">
+          <a href="{% url 'question' %}"><i class="fa fa-plus" aria-hidden="true"></i>Add Question</a> 
+          
+          <a href="#"><i class="fa fa-bell-o" aria-hidden="true"></i> Notification</a>
+        </div>
+    <div class="container-fluid gedf-wrapper">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                      <div class="profile-img">
+                        {% if data.image %}
+                        <img src="{{data.image.url}}"width="100">
+                        {% else %}
+                        <img src="#"width="100">
+                        {% endif %}
+                      </div>
+                        <div class="h5">&nbsp{{ user.UserID }}</div>
+                        <div class="h7">&nbsp{{data.profession }}</div><br>
+                        <div class="h7 "><b>Name : </b>&nbsp{{ user.first_name }}&nbsp{{ user.last_name }}</div><br>
+                        
+                        <div ><b>EMAIL :</b>&nbsp{{ user.email }}</div>
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="h6 text-muted">Followers</div>
+                            <div class="h5">5.2342</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="h6 text-muted">Following</div>
+                            <div class="h5">6758</div>
+                        </li>
+                      
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 gedf-main">
+    
+                <!--- \\\\\\\Post-->
+                
+    
+                <!--- \\\\\\\Post-->
+                {% for i in posts %}
+                <div class="card gedf-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                              
+                                <div class="mr-2">
+                                    
+                                    <img class="rounded-circle" width="45" src="/media/{{i.reg.image}}" alt="">
+                                </div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0">{{i.user.userid}}</div>
+                                    <div class="h7 text-muted">Miracles Lee Cross</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                        <div class="h6 dropdown-header">Configuration</div>
+                                        <a class="dropdown-item" href="#">Save</a>
+                                        <a class="dropdown-item" href="#">Hide</a>
+                                        <a class="dropdown-item" href="#">Report</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                    <div class="card-body">
+                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>
+                        <a class="card-link" href="#">
+                         {% if i.pimg %}
+                          <img src='/media/{{ i.pimg }}' style="height:150px;width:150px;border-radius:50%">
+                         {% else %}
+                        <br/>
+                        <p class="card-text">
+                          no img
+                        </p>
+                        {% endif %}
+                        <br/>
+                        <p class="card-text">
+                            {{i.question}}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- Post /////-->
+    
+    
+                <!--- \\\\\\\Post-->
+                <div class="card gedf-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2">
+                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                                </div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0">@LeeCross</div>
+                                    <div class="h7 text-muted">Miracles Lee Cross</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                        <div class="h6 dropdown-header">Configuration</div>
+                                        <a class="dropdown-item" href="#">Save</a>
+                                        <a class="dropdown-item" href="#">Hide</a>
+                                        <a class="dropdown-item" href="#">Report</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                    <div class="card-body">
+                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> 10 min ago</div>
+                        <a class="card-link" href="#">
+                            <h5 class="card-title"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit consectetur
+                                deserunt illo esse distinctio.</h5>
+                        </a>
+    
+                        <p class="card-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam omnis nihil, aliquam est, voluptates officiis iure soluta
+                            alias vel odit, placeat reiciendis ut libero! Quas aliquid natus cumque quae repellendus. Lorem
+                            ipsum dolor sit amet consectetur adipisicing elit. Ipsa, excepturi. Doloremque, reprehenderit!
+                            Quos in maiores, soluta doloremque molestiae reiciendis libero expedita assumenda fuga quae.
+                            Consectetur id molestias itaque facere? Hic!
+                        </p>
+                        <div>
+                            <span class="badge badge-primary">JavaScript</span>
+                            <span class="badge badge-primary">Android</span>
+                            <span class="badge badge-primary">PHP</span>
+                            <span class="badge badge-primary">Node.js</span>
+                            <span class="badge badge-primary">Ruby</span>
+                            <span class="badge badge-primary">Paython</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                    </div>
+                </div>
+                <!-- Post /////-->
+    
+    
+                <!--- \\\\\\\Post-->
+                <div class="card gedf-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2">
+                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                                </div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0">@LeeCross</div>
+                                    <div class="h7 text-muted">Miracles Lee Cross</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                        <div class="h6 dropdown-header">Configuration</div>
+                                        <a class="dropdown-item" href="#">Save</a>
+                                        <a class="dropdown-item" href="#">Hide</a>
+                                        <a class="dropdown-item" href="#">Report</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                    <div class="card-body">
+                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> Hace 40 min</div>
+                        <a class="card-link" href="#">
+                            <h5 class="card-title">Totam non adipisci hic! Possimus ducimus amet, dolores illo ipsum quos
+                                cum.</h5>
+                        </a>
+    
+                        <p class="card-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam sunt fugit reprehenderit consectetur exercitationem odio,
+                            quam nobis? Officiis, similique, harum voluptate, facilis voluptas pariatur dolorum tempora sapiente
+                            eius maxime quaerat.
+                            <a href="https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU" target="_blank">https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU</a>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                    </div>
+                </div>
+                <!-- Post /////-->
+    
+    
+    
+            </div>
+            <div class="col-md-3">
+                <div class="card gedf-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                            card's content.</p>
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+                <div class="card gedf-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                                card's content.</p>
+                            <a href="#" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+        <!-- end the page content here -->  
+      </div>
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+      Copyright &copy; black &amp; white | <a href="#">HTML5</a> | <a href="#">CSS</a> | <a href="#">HTML5 Web Templates</a>
+    </div>
+  </div>
+</body>
+</html>
+
+<!-- Started else part of if user is not loggedin -->>
+{% else %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>QnA ; My - World</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/style2.css' %}" title="style" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/content1.css' %}" title="style" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/content-menu1.css' %}" title="style" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="{% url 'index' %}">Question<span class="logo_colour">&amp;Answer</span></a></h1>
+          <h2>Share Your Views Here.</h2>
+        </div>
+      </div>
+      <div id="menubar">
+        <ul id="menu">
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li class="selected"><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+
+          {% if user.is_authenticated %}
+
+          <li><a href="{% url 'dashboard' %}">&nbsp Hi, &nbsp{{ user.first_name }}</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+
+          {% else %}
+
+          <li><a href="{% url 'register' %}">Register</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    <div id="site_content">
+      <div class="sidebar">
+        <!-- insert your sidebar items here -->
+        <h3>Latest News</h3>
+        <h4>New Website Launched</h4>
+        <h5>January 1st, 2010</h5>
+        <p>2010 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
+        <p></p>
+        <h4>New Website Launched</h4>
+        <h5>January 1st, 2010</h5>
+        <p>2010 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
+        <h3>Useful Links</h3>
+        <ul>
+          <li><a href="#">link 1</a></li>
+          <li><a href="#">link 2</a></li>
+          <li><a href="#">link 3</a></li>
+          <li><a href="#">link 4</a></li>
+        </ul>
+        <h3>Search</h3>
+        <form method="post" action="#" id="search_form">
+          <p>
+            <input class="search" type="text" name="search_field" value="Enter keywords....." />
+            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="{% static 'style/search.png' %}" alt="Search" title="Search" />
+          </p>
+        </form>
+      </div>
+      <div id="content">
+        <!-- insert the page content here -->
+
+
+        <div class="navbar">
+          <a href="{% url 'question' %}"><i class="fa fa-plus" aria-hidden="true"></i>Add Question</a> 
+          <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Answer</a> 
+          <a href="#"><i class="fa fa-file-text-o" aria-hidden="true"></i> Feed</a> 
+          <a href="#"><i class="fa fa-bell-o" aria-hidden="true"></i> Notification</a>
+        </div><br>
+
+
+
+
+        <!-- end the page content here -->  
+      </div>
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+      Copyright &copy; black &amp; white | <a href="#">HTML5</a> | <a href="#">CSS</a> | <a href="#">HTML5 Web Templates</a>
+    </div>
+  </div>
+</body>
+</html>
+{% endif %}

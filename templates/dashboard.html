@@ -1,0 +1,180 @@
+{% if user.is_authenticated %}
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>QnA ; My - World</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <!-- Font -->
+	
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700%7CAllura" rel="stylesheet">
+	
+	<!-- Stylesheets -->
+	
+	<link href="{% static 'common-css/bootstrap.css' %}" rel="stylesheet">
+	
+	<link href="{% static 'common-css/ionicons.css' %}" rel="stylesheet">
+	
+	<link href="{% static 'common-css/fluidbox.min.css' %}" rel="stylesheet">
+	
+	<link href="{% static '01-cv-portfolio/css/styles.css' %}" rel="stylesheet">
+	
+	<link href="{% static '01-cv-portfolio/css/responsive.css' %}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'style/style2.css' %}" title="style" />
+
+</head>
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="{% url 'index' %}">Question<span class="logo_colour">&amp;Answer</span></a></h1>
+          <h2>Share Your Views Here.</h2>
+        </div>
+      </div>
+      <div id="menubar">
+        <ul id="menu">
+            <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+            <li ><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+  
+            {% if user.is_authenticated %}
+  
+            <li class="selected"><a href="{% url 'dashboard' %}">Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+  
+            {% else %}
+  
+            <li><a href="{% url 'register' %}">Register</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
+  
+            {% endif %}
+          </ul>
+      </div>
+    </div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div class="sidebar">
+        <!-- insert your sidebar items here -->
+        <h3>Latest News</h3>
+        <h4>New Website Launched</h4>
+        <h5>January 1st, 2010</h5>
+        <p>2010 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
+        <p></p>
+        <h4>New Website Launched</h4>
+        <h5>January 1st, 2010</h5>
+        <p>2010 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
+        <h3>Useful Links</h3>
+        <ul>
+          <li><a href="#">link 1</a></li>
+          <li><a href="#">link 2</a></li>
+          <li><a href="#">link 3</a></li>
+          <li><a href="#">link 4</a></li>
+        </ul>
+        <h3>Search</h3>
+        <form method="post" action="#" id="search_form">
+          <p>
+            <input class="search" type="text" name="search_field" value="Enter keywords....." />
+            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="{% static 'style/search.png' %}" alt="Search" title="Search" />
+          </p>
+        </form>
+      </div>
+      <div id="content">
+        <!-- insert the page content here -->      
+        <section class="intro-section">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-1 col-lg-2"></div>
+              <div class="col-md-10 col-lg-8">
+                <div class="intro">
+
+                  <div class="profile-img"><img src="/media/{{data.image}}"></div>
+                  <h2><b>&nbsp{{ user.first_name}}&nbsp{{ user.last_name}}</b></h2>
+                  <h4 class="font-yellow">&nbsp{{data.profession }}</h4>
+                  <ul class="information margin-tb-30">
+                
+                    <li><b>EMAIL : </b>&nbsp{{ user.email }}</li>
+                    <li><b>Contact No. : </b>&nbsp{{data.contactNO }}</li>
+                     
+                  </ul>
+                  <ul class="social-icons">
+                    <li><a href="#"><i class="ion-social-linkedin"></i></a></li>
+                    <li><a href="#"><i class="ion-social-facebook"></i></a></li>
+                    <li><a href="#"><i class="ion-social-twitter"></i></a></li>
+                    <div style="border-radius: 5px;background-color: rgb(191, 240, 57);
+                      color: #fff;
+                      padding: 8px;">
+                        <a style="text-decoration: none;" href="{% url 'edit-profile' %}">Edit Profile?</a>
+                      </div> 
+                  </ul>
+                  
+                </div><!-- intro -->
+              </div><!-- col-sm-8 -->
+            </div><!-- row -->
+          </div><!-- container -->
+        </section><!-- intro-section -->
+      </div>
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+      Copyright &copy; black &amp; white | <a href="#">HTML5</a> | <a href="#">CSS</a> | <a href="#">HTML5 Web Templates</a>
+    </div>
+  </div>
+</body>
+</html>
+{% else %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>QnA ; My - World</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/style2.css' %}" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="{% url 'index' %}">Question<span class="logo_colour">&amp;Answer</span></a></h1>
+          <h2>Share Your Views Here.</h2>
+        </div>
+      </div>
+          <h1 style=" background-color: green; color: rgb(240, 230, 230);text-align: center;">Please Login First</h1>
+          <a href="{% url 'login' %}">Click Here To go back login menu</a>
+      </div>
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+      Copyright &copy; black &amp; white | <a href="#">HTML5</a> | <a href="#">CSS</a> | <a href="#">HTML5 Web Templates</a>
+    </div>
+  </div>
+  <script src="{% static 'common-js/jquery-3.2.1.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/tether.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/bootstrap.js' %}"></script>
+	
+	<script src="{% static 'common-js/isotope.pkgd.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/jquery.waypoints.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/progressbar.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/jquery.fluidbox.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/scripts.js' %}"></script>
+</body>
+</html>
+{% endif %}

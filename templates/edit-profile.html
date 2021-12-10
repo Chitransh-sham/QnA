@@ -1,0 +1,159 @@
+{% if user.is_authenticated %}
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>QnA ; My - World</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/style2.css' %}" title="style" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/content.css' %}" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="{% url 'index' %}">Question<span class="logo_colour">&amp;Answer</span></a></h1>
+          <h2>Share Your Views Here.</h2>
+        </div>
+      </div>
+      <div id="menubar">
+        <ul id="menu">
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+
+          {% if user.is_authenticated %}
+
+          <li class="selected"><a href="{% url 'dashboard' %}">Profile</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+
+          {% else %}
+
+          <li><a href="{% url 'register' %}">Register</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    <div id="site_content">
+      <div class="sidebar">
+        <!-- insert your sidebar items here -->
+        <h3>Latest News</h3>
+        <h4>New Website Launched</h4>
+        <h5>January 1st, 2010</h5>
+        <p>2010 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
+        <p></p>
+        <h4>New Website Launched</h4>
+        <h5>January 1st, 2010</h5>
+        <p>2010 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
+        <h3>Useful Links</h3>
+        <ul>
+          <li><a href="#">link 1</a></li>
+          <li><a href="#">link 2</a></li>
+          <li><a href="#">link 3</a></li>
+          <li><a href="#">link 4</a></li>
+        </ul>
+        <h3>Search</h3>
+        <form method="post" action="#" id="search_form">
+          <p>
+            <input class="search" type="text" name="search_field" value="Enter keywords....." />
+            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="{% static 'style/search.png' %}" alt="Search" title="Search" />
+          </p>
+        </form>
+      </div>
+      <div id="content">
+        <!-- insert the page content here -->
+      </br></br></br>
+        <h1>Update Your Profile Here !</h1>
+        <form action="update" method="POST" enctype="multipart/form-data" >
+          {% csrf_token %}
+          <div class="form_settings">
+
+            <p><input type="file"  accept="image/*" name="img" id="file"  onchange="loadFile(event)" style="display: none;"></p>
+            <p><img style="border-radius: 25px;" src="/media/{{data.image}}" name="img"  id="output" width="200" /></p>
+            <p><label for="file" style="cursor: pointer; background-color: rgb(55, 56, 55); border-radius: 5px; padding: 8px; color: #fff;">Upload Image</label></p>
+            <script>
+              var loadFile = function(event) {
+                var image = document.getElementById('output');
+                image.src = URL.createObjectURL(event.target.files[0]);
+              };
+              </script>
+
+            <br><br>  
+            <p><span>Name</span><input class="contact" type="text" name="first_name" value="{{ user.first_name }}" placeholder="Your First Name.."></p>
+            <p><span>Last Name</span><input class="contact" type="text" name="last_name" value="{{ user.last_name }}" placeholder="Your Last Name.."/></p>
+            <p><span>Date of Birth</span><input class="contact" type="date" name="dob" value="1000-01-01" ></p>
+            <p><span>Profession</span><input class="contact" type="text" name="profession" value="{{data.profession }}" placeholder="Your Profession.."></p>
+            <p><span>Contact No.</span><input class="contact" type="number" name="contactNO" value="{{data.contactNO }}" placeholder="Enter Your Mobile Number.."/></p>
+            <p><span>Email Address</span><input class="contact" type="text" name="email" value="{{ user.email }}" placeholder="Enter Your Email ID.."/></p>
+            <p><span>Password</span><input class="contact" type="text" name="password" value="" placeholder="Enter Password..."/></p>
+            <p><span>Confirm Password</span><input class="contact" type="text" name="your_name" value="" placeholder="Enter Confirm Password.."/></p>
+            <p style="padding-top: 10px"></p><span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="Update" /></p>
+          
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+      Copyright &copy; black &amp; white | <a href="#">HTML5</a> | <a href="#">CSS</a> | <a href="#">HTML5 Web Templates</a>
+    </div>
+  </div>
+</body>
+</html>
+{% else %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>QnA ; My - World</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/style2.css' %}" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="{% url 'index' %}">Question<span class="logo_colour">&amp;Answer</span></a></h1>
+          <h2>Share Your Views Here.</h2>
+        </div>
+      </div>
+          <h1 style=" background-color: green; color: rgb(240, 230, 230);text-align: center;">Please Login First</h1>
+          <a href="{% url 'login' %}">Click Here To go back login menu</a>
+      </div>
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+      Copyright &copy; black &amp; white | <a href="#">HTML5</a> | <a href="#">CSS</a> | <a href="#">HTML5 Web Templates</a>
+    </div>
+  </div>
+  <script src="{% static 'common-js/jquery-3.2.1.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/tether.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/bootstrap.js' %}"></script>
+	
+	<script src="{% static 'common-js/isotope.pkgd.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/jquery.waypoints.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/progressbar.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/jquery.fluidbox.min.js' %}"></script>
+	
+	<script src="{% static 'common-js/scripts.js' %}"></script>
+</body>
+</html>
+{% endif %}

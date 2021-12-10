@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>QnA ; My - World</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style/style2.css' %}" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="{% url 'index' %}">Question<span class="logo_colour">&amp;Answer</span></a></h1>
+          <h2>Share Your Views Here.</h2>
+        </div>
+      </div>
+      <div id="menubar">
+        <ul id="menu">
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li class="selected"><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="#">&nbsp{{ user.username }}&nbsp Hi</a></li>
+          <li><a href="#">Logout</a></li>
+          {% else %}
+
+          <li><a href="{% url 'register' %}">Register</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    <div id="content_header"></div>
+    <div id="site_content" style=' margin: 15px;'>
+      
+        <!-- insert your sidebar items here -->
+        <h3>Latest News</h3>
+        <h4>New Website Launched</h4>
+        
+        <form action="checkview" method="post">
+            {% csrf_token %}
+          <div class="form_settings">
+            <p><span>Room Name</span><input type="text"  name="roomname" id="room_name" value="" /></p>
+            <p><span>Username</span><input type="text"  name="username"value="{{user.username}}" id="username" width="100px" /></p>
+            <p style="padding-top: 15px"><span>&nbsp;</span><input type="submit" value="Enter Room"></p>
+          </div>
+        </form>
+      </div>
+    
+    <div id="content_footer"></div>
+    <div id="footer">
+      Copyright &copy; black &amp; white | <a href="#">HTML5</a> | <a href="#">CSS</a> | <a href="#">HTML5 Web Templates</a>
+    </div>
+  </div>
+</body>
+</html>
